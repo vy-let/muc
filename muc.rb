@@ -8,22 +8,31 @@ require 'open3'
 
 total_pts = ARGV.lazy.map { |infile|
     
-    this_file = -50  # “...the compression mechanism has a constant overhead in the region of 50 bytes.”
+    sizeof_file = -50  # “...the compression mechanism has a constant overhead in the region of 50 bytes.”
+    file_contents = open(infile, 'rb').each_line.lazy.map {|ligne| ligne.gsub /\s/, '' }
     
-    Open3.popen3("bzip2", "--compress", "--best", "--stdout", "--quiet", infile) do |bzin, bzout, bzerr, wait_thr|
-        bzin.close
+    Open3.popen3("bzip2", "--compress", "--best", "--quiet") do |bzin, bzout, bzerr, wait_thr|
         bzout.binmode
+        pool = []
         
-        begin
-            loop do
-                this_file += bzout.readpartial(1024).bytesize
-            end
-        rescue EOFError => eofe
-            # cool.
+        pool << Thread.new do
+            file_contents.each {|ligne| bzin.write ligne }
+            bzin.close
         end
         
-        bzerr.close
-        bzout.close
+        pool << Thread.new do
+            begin
+                loop do
+                    sizeof_file += bzout.readpartial(1024).bytesize
+                end
+            rescue EOFError => eofe
+                # done.
+            end
+        end
+        
+        pool << Thread.new { bzerr.read }  # We don't care, for now.
+        
+        pool.each {|th| th.join }
         
         if wait_thr.value.exitstatus != 0
             $stderr.puts "Big epic problem."
@@ -32,7 +41,7 @@ total_pts = ARGV.lazy.map { |infile|
         
     end
     
-    [this_file, 0].max / 10.0
+    [sizeof_file, 0].max / 10.0
     
 }.reduce( :+ )
 
