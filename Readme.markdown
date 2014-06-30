@@ -32,7 +32,7 @@ You shouldn’t measure software in terms of Lines Of Code. That makes no sense.
 
 # MUC
 
-The *Meaningful Unit of Code,* or *muc,* is defined as the number of bytes, as compressed by bzip2 at its best compression level, of the source code after having its whitespace removed. Compression headers are not counted.\*
+The *Meaningful Unit of Code,* or *muc,* is defined as one-tenth the number of bytes, as compressed by bzip2 at its best compression level, of the source code without its whitespace. Compression headers are not counted.\*
 
 For comparison, both examples above have 11.8 muc. They’re the same by definition: whitespace is stripped in advance. Let’s compare to a more distinct revision:
 
