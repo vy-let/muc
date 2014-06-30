@@ -32,7 +32,7 @@ You shouldn’t measure software in terms of Lines Of Code. That makes no sense.
 
 # MUC
 
-The *Meaningful Unit of Code,* or *muc,* is defined as the number of bytes, as compressed by bzip2 at its best compression level, of the source code after having its whitespace removed.\*
+The *Meaningful Unit of Code,* or *muc,* is defined as the number of bytes, as compressed by bzip2 at its best compression level, of the source code after having its whitespace removed. Compression headers are not counted.\*
 
 For comparison, both examples above have 11.8 muc. They’re the same by definition: whitespace is stripped in advance. Let’s compare to a more distinct revision:
 
@@ -51,15 +51,15 @@ For comparison, both examples above have 11.8 muc. They’re the same by definit
         }
     }
 
-That’s 13.5 muc for functionally identical code. Ideally, they should be the same, but that would require compiling the code or similar. The extra 1.7 comes from the assignment to a variable; you decide whether this feels faithful to the added complexity of the program.
+That’s 13.5 muc for functionally identical code. Ideally, perhaps they should be the same, but that would require compiling the code or similar. The extra 1.7 comes from the assignment to a variable; you decide whether this feels faithful to the added complexity of the program.
 
-\* Note that 50 bytes are subtracted from what the compressor outputs, to discount the header data. From the bzip2 manpage:
+\* 50 bytes are subtracted from what the compressor outputs, to discount the header data. From the bzip2 manpage:
 
 >   …the compression mechanism has a constant overhead in the region of 50 bytes.
 
 
 
-# What it solves
+## What it solves
 
 Muc avoids:
 
@@ -67,7 +67,7 @@ Muc avoids:
 + over-counting repetitive phrases found in verbose languages.
 + over-counting repetitive phrases found in redundant commenting formats.
 
-# What it does not solve
+## What it does not solve
 
 Muc does not:
 
