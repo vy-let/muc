@@ -74,3 +74,13 @@ Muc does not:
 + address the usefulness of comments. Essentially, concise comments are deemed meaningful to the code.
 + address the actual usefulness of code. If it could, perhaps we could also determine whether it halts…
 + account for differences in the amount of boilerplate code required in different languages.
+
+
+
+## Considerations
+
+When measuring a project’s muc, the whole is less than the sum of its parts. That is to say, all project source files should be concatenated and considered at once for compressing, rather than compressing each individually and adding together the muc for each file.
+
+Imagine your project contains two virtually-identical files. The second doesn’t add much meaning over the first, apart from its differences. Say they have 102.0 and 102.5 muc, respectively. Taken together, they might contribute only 109 to the project, where, taken individually, they would add an artificially-high 204.5. (Why, you might ask, should we have virtually identical files? We shouldn’t; but copy-paste code inevitably shows up across files, and should not be over-counted.)
+
+**The reference ruby tool does not currently follow this guideline.**
