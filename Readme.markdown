@@ -84,3 +84,17 @@ When measuring a project’s muc, the whole is less than the sum of its parts. T
 Imagine your project contains two virtually-identical files. The second doesn’t add much meaning over the first, apart from its differences. Say they have 102.0 and 102.5 muc, respectively. Taken together, they might contribute only 109 to the project, where, taken individually, they would add an artificially-high 204.5. (Why, you might ask, should we have virtually identical files? We shouldn’t; but copy-paste code inevitably shows up across files, and should not be over-counted.)
 
 **The reference ruby tool does not currently follow this guideline.**
+
+
+
+# MUC Ruby Reference Tool
+
+…requires Ruby 2 and bzip2 to be installed and console-runnable. It is in alpha state, and is not guaranteed to work correctly in all situations—and is guaranteed to work incorrectly in some situations.
+
+To run, make sure `muc.rb` or a symlink thereto is in your Path, and do
+
+    muc.rb file
+    muc.rb file1 file2 file3...
+    muc.rb *.m
+
+
