@@ -1,6 +1,6 @@
 # Prologue
 
-You shouldn't measure software in terms of Lines Of Code. That makes no sense. You know why:
+You shouldn’t measure software in terms of Lines Of Code. That makes no sense. You know why:
 
     #import <Foundation/Foundation.h>
     
@@ -34,7 +34,7 @@ You shouldn't measure software in terms of Lines Of Code. That makes no sense. Y
 
 The *Meaningful Unit of Code,* or *muc,* is defined as the number of bytes, as compressed by bzip2 at its best compression level, of the source code after having its whitespace removed.\*
 
-For comparison, both examples above have 11.8 muc. They're the same by definition: whitespace is stripped in advance. Let's compare to a more distinct revision:
+For comparison, both examples above have 11.8 muc. They’re the same by definition: whitespace is stripped in advance. Let’s compare to a more distinct revision:
 
     #import <Foundation/Foundation.h>
     
@@ -51,7 +51,7 @@ For comparison, both examples above have 11.8 muc. They're the same by definitio
         }
     }
 
-That's 13.5 muc for functionally identical code. Ideally, they should be the same, but that would require compiling the code or similar. The extra 1.7 comes from the assignment to a variable; you decide whether this feels faithful to the added complexity of the program.
+That’s 13.5 muc for functionally identical code. Ideally, they should be the same, but that would require compiling the code or similar. The extra 1.7 comes from the assignment to a variable; you decide whether this feels faithful to the added complexity of the program.
 
 \* Note that 50 bytes are subtracted from what the compressor outputs, to discount the header data. From the bzip2 manpage:
 
