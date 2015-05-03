@@ -2,14 +2,18 @@
 
 # muc  -  Meaningful Units of Code
 # Talus Baddley
-# 2014
+# 2014-2015
+
+# Version 2: Switched to ARGF for auto-concat'ing;
+#            added much suaveness to input checking.
 
 require 'open3'
+argv_count = ARGV.count
 
-total_pts = ARGV.lazy.map { |infile|
-    
+
+def total_pts catfiles
     sizeof_file = -50  # “...the compression mechanism has a constant overhead in the region of 50 bytes.”
-    file_contents = open(infile, 'rb').each_line.lazy.map {|ligne| ligne.gsub /\s/, '' }
+    file_contents = catfiles.each_line.lazy.map {|ligne| ligne.gsub /\s/, '' }
     
     Open3.popen3("bzip2", "--compress", "--best", "--quiet") do |bzin, bzout, bzerr, wait_thr|
         bzout.binmode
@@ -43,7 +47,24 @@ total_pts = ARGV.lazy.map { |infile|
     
     [sizeof_file, 0].max / 10.0
     
-}.reduce( :+ )
+end
+    
 
 
-puts "#{total_pts} muc for #{ARGV.count} file#{ARGV.count == 1 ? '' : 's'}"
+points = if ARGF.filename == '-' && (STDIN.tty? || STDIN.closed?)
+    STDERR.puts ""
+    STDERR.puts "Usage: muc.rb <infile> [<infile-2> ...]"
+    STDERR.puts "    or: cat <stuff> | muc.rb"
+    STDERR.puts ""
+    
+    0
+    
+else
+    total_pts ARGF
+    
+end
+
+puts argv_count == 0 ?
+    "#{points} muc for stdin" :
+    "#{points} muc for #{argv_count} file#{argv_count == 1 ? '' : 's'}"
+    
